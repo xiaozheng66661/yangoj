@@ -5,8 +5,8 @@ import com.baiyang.yangoj.common.ErrorCode;
 /**
  * 自定义异常类
  *
- * @author <a href="https://github.com/libaiyang">程序员鱼皮</a>
- * @from <a href="https://baiyang.icu">编程导航知识星球</a>
+ * @author  
+ * @from  
  */
 public class BusinessException extends RuntimeException {
 

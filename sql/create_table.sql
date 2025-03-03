@@ -1,6 +1,6 @@
 # 数据库初始化
-# @author <a href="https://github.com/libaiyang">程序员鱼皮</a>
-# @from <a href="https://baiyang.icu">编程导航知识星球</a>
+# @author
+# @from
 -- 如果存在同名库就删除
 DROP DATABASE IF EXISTS yangoj;
 -- 创建库

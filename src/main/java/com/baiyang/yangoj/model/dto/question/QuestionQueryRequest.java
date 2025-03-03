@@ -1,28 +1,29 @@
-package com.baiyang.yangoj.model.entity;
+package com.baiyang.yangoj.model.dto.question;
 
+import com.baiyang.yangoj.common.PageRequest;
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
+import java.util.List;
 
 /**
- * 帖子
+ * 查询请求
  *
  * @author  
  * @from  
  */
-@TableName(value = "post")
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class Post implements Serializable {
+public class QuestionQueryRequest extends PageRequest implements Serializable {
 
     /**
      * id
      */
-    @TableId(type = IdType.ASSIGN_ID)
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -36,9 +37,34 @@ public class Post implements Serializable {
     private String content;
 
     /**
-     * 标签列表 json
+     * 标签列表（json 数组）
      */
     private String tags;
+
+    /**
+     * 题目答案
+     */
+    private String answer;
+
+    /**
+     * 题目提交数
+     */
+    private Integer submitNum;
+
+    /**
+     * 题目通过数
+     */
+    private Integer acceptedNum;
+
+    /**
+     * 判题配置(json对象)
+     */
+    private String judgeConfig;
+
+    /**
+     * 判题用例(json数组)
+     */
+    private String judgeCase;
 
     /**
      * 点赞数
@@ -68,9 +94,7 @@ public class Post implements Serializable {
     /**
      * 是否删除
      */
-    @TableLogic
     private Integer isDelete;
 
-    @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

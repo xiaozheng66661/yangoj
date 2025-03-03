@@ -18,8 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * 帖子点赞服务实现
  *
- * @author <a href="https://github.com/libaiyang">程序员鱼皮</a>
- * @from <a href="https://baiyang.icu">编程导航知识星球</a>
+ * @author  
+ * @from  
  */
 @Service
 public class PostThumbServiceImpl extends ServiceImpl<PostThumbMapper, PostThumb>
