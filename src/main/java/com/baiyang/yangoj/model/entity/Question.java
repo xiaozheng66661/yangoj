@@ -31,7 +31,7 @@ public class Question {
     private String content;
 
     /**
-     * 标签列表（json 数组）
+     * 标签列表(这里是String 因为要存到数据库中)
      */
     private String tags;
 

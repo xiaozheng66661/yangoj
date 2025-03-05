@@ -9,10 +9,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 创建题目请求
+ * 创建题目请求(一般是管理员用)
  *
  * @author  
- * @from  
+ * @from
  */
 @Data
 public class QuestionAddRequest implements Serializable {
@@ -37,46 +37,16 @@ public class QuestionAddRequest implements Serializable {
      * 题目答案
      */
     private String answer;
+    // todo 定义对象
+    /**
+     * 判题配置
+     */
+    private JudgeConfig judgeConfig;
 
     /**
-     * 判题配置(json对象)
+     * 判题用例
      */
-    private String judgeConfig;
-
-    /**
-     * 判题用例(json数组)
-     */
-    private String judgeCase;
-
-    /**
-     * 点赞数
-     */
-    private Integer thumbNum;
-
-    /**
-     * 收藏数
-     */
-    private Integer favourNum;
-
-    /**
-     * 创建用户 id
-     */
-    private Long userId;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
-    /**
-     * 是否删除
-     */
-    private Integer isDelete;
+    private List<JudgeCase> judgeCase;
 
     private static final long serialVersionUID = 1L;
 }

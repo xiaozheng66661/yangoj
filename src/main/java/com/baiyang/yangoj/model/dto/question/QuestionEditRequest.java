@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 编辑请求
+ * 编辑题目请求(出题人，本质上也是用户)
  *
  * @author  
  * @from  
@@ -20,7 +20,6 @@ public class QuestionEditRequest implements Serializable {
     /**
      * id
      */
-    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -34,64 +33,27 @@ public class QuestionEditRequest implements Serializable {
     private String content;
 
     /**
-     * 标签列表（json 数组）
+     * 标签列表
      */
-    private String tags;
+    private List<String> tags;
 
     /**
      * 题目答案
      */
     private String answer;
 
-    /**
-     * 题目提交数
-     */
-    private Integer submitNum;
 
     /**
-     * 题目通过数
+     * 判题配置
      */
-    private Integer acceptedNum;
+    private JudgeConfig judgeConfig;
 
     /**
-     * 判题配置(json对象)
+     * 判题用例
      */
-    private String judgeConfig;
+    private List<JudgeCase> judgeCase;
 
-    /**
-     * 判题用例(json数组)
-     */
-    private String judgeCase;
 
-    /**
-     * 点赞数
-     */
-    private Integer thumbNum;
-
-    /**
-     * 收藏数
-     */
-    private Integer favourNum;
-
-    /**
-     * 创建用户 id
-     */
-    private Long userId;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
-
-    /**
-     * 是否删除
-     */
-    private Integer isDelete;
 
     private static final long serialVersionUID = 1L;
 }
