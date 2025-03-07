@@ -37,7 +37,6 @@ public class QuestionAddRequest implements Serializable {
      * 题目答案
      */
     private String answer;
-    // todo 定义对象
     /**
      * 判题配置
      */

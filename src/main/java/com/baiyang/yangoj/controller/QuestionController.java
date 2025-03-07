@@ -9,10 +9,9 @@ import com.baiyang.yangoj.common.ResultUtils;
 import com.baiyang.yangoj.constant.UserConstant;
 import com.baiyang.yangoj.exception.BusinessException;
 import com.baiyang.yangoj.exception.ThrowUtils;
-import com.baiyang.yangoj.model.dto.question.QuestionAddRequest;
-import com.baiyang.yangoj.model.dto.question.QuestionEditRequest;
-import com.baiyang.yangoj.model.dto.question.QuestionQueryRequest;
-import com.baiyang.yangoj.model.dto.question.QuestionUpdateRequest;
+import com.baiyang.yangoj.model.dto.post.PostQueryRequest;
+import com.baiyang.yangoj.model.dto.question.*;
+import com.baiyang.yangoj.model.entity.Post;
 import com.baiyang.yangoj.model.entity.Question;
 import com.baiyang.yangoj.model.entity.User;
 import com.baiyang.yangoj.model.vo.QuestionVO;
@@ -64,6 +63,17 @@ public class QuestionController {
         if (tags != null) {
             question.setTags(JSONUtil.toJsonStr(tags));
         }
+        JudgeConfig judgeConfig = questionAddRequest.getJudgeConfig();
+        if (judgeConfig != null)
+        {
+            question.setJudgeConfig(JSONUtil.toJsonStr(judgeConfig));
+        }
+        List<JudgeCase> judgeCase = questionAddRequest.getJudgeCase();
+        if (judgeCase != null)
+        {
+            question.setJudgeCase(JSONUtil.toJsonStr(judgeCase));
+        }
+
         questionService.validQuestion(question, true);
         User loginUser = userService.getLoginUser(request);
         question.setUserId(loginUser.getId());
@@ -118,6 +128,17 @@ public class QuestionController {
         if (tags != null) {
             question.setTags(JSONUtil.toJsonStr(tags));
         }
+        JudgeConfig judgeConfig = questionUpdateRequest.getJudgeConfig();
+        if (judgeConfig != null)
+        {
+            question.setJudgeConfig(JSONUtil.toJsonStr(judgeConfig));
+        }
+        List<JudgeCase> judgeCase = questionUpdateRequest.getJudgeCase();
+        if (judgeCase != null)
+        {
+            question.setJudgeCase(JSONUtil.toJsonStr(judgeCase));
+        }
+
         // 参数校验
         questionService.validQuestion(question, false);
         long id = questionUpdateRequest.getId();
@@ -147,7 +168,7 @@ public class QuestionController {
     }
 
     /**
-     * 分页获取列表（仅管理员）
+     * 分页获取题目列表（仅管理员）
      *
      * @param questionQueryRequest
      * @return

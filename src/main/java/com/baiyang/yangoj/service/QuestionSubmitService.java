@@ -1,9 +1,15 @@
 package com.baiyang.yangoj.service;
 
 import com.baiyang.yangoj.model.dto.questionsubmit.QuestionSubmitAddRequest;
+import com.baiyang.yangoj.model.dto.questionsubmit.QuestionSubmitQueryRequest;
 import com.baiyang.yangoj.model.entity.QuestionSubmit;
 import com.baiyang.yangoj.model.entity.User;
+import com.baiyang.yangoj.model.vo.QuestionSubmitVO;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author 29413
@@ -20,6 +26,32 @@ public interface QuestionSubmitService extends IService<QuestionSubmit> {
      */
     long doQuestionSubmit(QuestionSubmitAddRequest questionSubmitAddRequest, User loginUser);
 
+    /**
+     * 获取查询条件
+     *
+     * @param questionSubmitQueryRequest
+     * @return
+     */
+    QueryWrapper<QuestionSubmit> getQueryWrapper(QuestionSubmitQueryRequest questionSubmitQueryRequest);
+
+
+    /**
+     * 获取题目封装
+     *
+     * @param questionSubmit
+     * @param loginUser
+     * @return
+     */
+    QuestionSubmitVO getQuestionSubmitVO(QuestionSubmit questionSubmit, User loginUser);
+
+    /**
+     * 分页获取题目封装
+     *
+     * @param questionSubmit
+     * @param loginUser
+     * @return
+     */
+    Page<QuestionSubmitVO> getQuestionSubmitVOPage(Page<QuestionSubmit> questionSubmit, User loginUser);
 
 
 }

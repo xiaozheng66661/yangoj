@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 更新请求(管理员)
+ * 题目更新请求(管理员)
  *
  * @author  
  * @from  

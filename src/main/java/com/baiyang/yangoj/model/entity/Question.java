@@ -17,7 +17,7 @@ public class Question {
     /**
      * id
      */
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID) // 防止爬虫(非连续递增) 类似于1897269061820387329的东西
     private Long id;
 
     /**
