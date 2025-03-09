@@ -9,9 +9,7 @@ import com.baiyang.yangoj.common.ResultUtils;
 import com.baiyang.yangoj.constant.UserConstant;
 import com.baiyang.yangoj.exception.BusinessException;
 import com.baiyang.yangoj.exception.ThrowUtils;
-import com.baiyang.yangoj.model.dto.post.PostQueryRequest;
 import com.baiyang.yangoj.model.dto.question.*;
-import com.baiyang.yangoj.model.entity.Post;
 import com.baiyang.yangoj.model.entity.Question;
 import com.baiyang.yangoj.model.entity.User;
 import com.baiyang.yangoj.model.vo.QuestionVO;
@@ -25,12 +23,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 题目接口
  *
- * @author  
- * @from  
+ * @author
+ * @from
  */
 @RestController
 @RequestMapping("/question")
@@ -64,13 +63,11 @@ public class QuestionController {
             question.setTags(JSONUtil.toJsonStr(tags));
         }
         JudgeConfig judgeConfig = questionAddRequest.getJudgeConfig();
-        if (judgeConfig != null)
-        {
+        if (judgeConfig != null) {
             question.setJudgeConfig(JSONUtil.toJsonStr(judgeConfig));
         }
         List<JudgeCase> judgeCase = questionAddRequest.getJudgeCase();
-        if (judgeCase != null)
-        {
+        if (judgeCase != null) {
             question.setJudgeCase(JSONUtil.toJsonStr(judgeCase));
         }
 
@@ -129,13 +126,11 @@ public class QuestionController {
             question.setTags(JSONUtil.toJsonStr(tags));
         }
         JudgeConfig judgeConfig = questionUpdateRequest.getJudgeConfig();
-        if (judgeConfig != null)
-        {
+        if (judgeConfig != null) {
             question.setJudgeConfig(JSONUtil.toJsonStr(judgeConfig));
         }
         List<JudgeCase> judgeCase = questionUpdateRequest.getJudgeCase();
-        if (judgeCase != null)
-        {
+        if (judgeCase != null) {
             question.setJudgeCase(JSONUtil.toJsonStr(judgeCase));
         }
 
@@ -150,7 +145,7 @@ public class QuestionController {
     }
 
     /**
-     * 根据 id 获取
+     * 根据 id 获取 脱敏之后的数据
      *
      * @param id
      * @return
@@ -165,6 +160,29 @@ public class QuestionController {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
         return ResultUtils.success(questionService.getQuestionVO(question, request));
+    }
+
+    /**
+     * 根据 id 获取 未脱敏的数据
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/get")
+    public BaseResponse<Question> getQuestionById(long id, HttpServletRequest request) {
+        if (id <= 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Question question = questionService.getById(id);
+        if (question == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        User loginUser = userService.getLoginUser(request);
+        // 不是本人或管理员，不能直接获取所有信息
+        if (!Objects.equals(loginUser.getId(), question.getUserId()) && !userService.isAdmin(loginUser)) {
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+        }
+        return ResultUtils.success(question);
     }
 
     /**
@@ -192,7 +210,7 @@ public class QuestionController {
      */
     @PostMapping("/list/page/vo")
     public BaseResponse<Page<QuestionVO>> listQuestionVOByPage(@RequestBody QuestionQueryRequest questionQueryRequest,
-            HttpServletRequest request) {
+                                                               HttpServletRequest request) {
         long current = questionQueryRequest.getCurrent();
         long size = questionQueryRequest.getPageSize();
         // 限制爬虫
@@ -211,7 +229,7 @@ public class QuestionController {
      */
     @PostMapping("/my/list/page/vo")
     public BaseResponse<Page<QuestionVO>> listMyQuestionVOByPage(@RequestBody QuestionQueryRequest questionQueryRequest,
-            HttpServletRequest request) {
+                                                                 HttpServletRequest request) {
         if (questionQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
