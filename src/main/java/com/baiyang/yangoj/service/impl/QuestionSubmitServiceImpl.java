@@ -4,6 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import com.baiyang.yangoj.common.ErrorCode;
 import com.baiyang.yangoj.constant.CommonConstant;
 import com.baiyang.yangoj.exception.BusinessException;
+import com.baiyang.yangoj.judge.JudgeService;
 import com.baiyang.yangoj.mapper.QuestionSubmitMapper;
 import com.baiyang.yangoj.model.dto.questionsubmit.QuestionSubmitAddRequest;
 import com.baiyang.yangoj.model.dto.questionsubmit.QuestionSubmitQueryRequest;
@@ -22,11 +23,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 /**
@@ -42,6 +45,10 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
 
     @Resource
     private UserService userService;
+
+    @Resource
+    @Lazy
+    private JudgeService judgeService;
 
     /**
      * 提交题目
@@ -82,7 +89,12 @@ public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper,
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "数据插入失败");
 
         }
-        return questionSubmit.getId();
+        // 执行判题服务
+        Long questionSubmitId = questionSubmit.getId();
+        CompletableFuture.runAsync(() -> {
+            judgeService.doJudge(questionSubmitId);
+        });
+        return questionSubmitId;
     }
 
     @Override

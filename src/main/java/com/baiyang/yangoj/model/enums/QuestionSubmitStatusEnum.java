@@ -19,7 +19,7 @@ public enum QuestionSubmitStatusEnum {
      */
     PENDING("待判题", 0),
     JUDGING("判题中", 1),
-    SUCCESS("成功", 2),
+    SUCCEED("成功", 2),
     FAILED("失败", 3);
 
 
