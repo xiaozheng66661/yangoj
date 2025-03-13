@@ -1,8 +1,7 @@
 package com.baiyang.yangoj.model.vo;
 
 import cn.hutool.json.JSONUtil;
-import com.baiyang.yangoj.model.dto.questionsubmit.JudgeInfo;
-import com.baiyang.yangoj.model.entity.Question;
+import com.baiyang.yangoj.judge.codesandbox.model.JudgeInfo;
 import com.baiyang.yangoj.model.entity.QuestionSubmit;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
